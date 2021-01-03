@@ -1,4 +1,5 @@
 import { html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import './movie-carousel.js';
 
 class MovieDetails extends LitElement {
 
@@ -17,7 +18,7 @@ class MovieDetails extends LitElement {
     return this;
   }
 
-  _posterUrl(poster, size='w92') {
+  _posterUrl(poster, size='original') {
     const imgPath = 'https://image.tmdb.org/t/p/';
     const p =  imgPath + size + poster
     console.log('poster', p)
@@ -29,10 +30,14 @@ class MovieDetails extends LitElement {
    
     return html`
       <div class="card shadow-lg p-3 mb-5">
-        
+        <!-- carousel -->
+        <div class="row g-0">
+           <movie-carousel .posters=${this.movie.images.backdrops.sort((a, b) => (a.vote_average > b.vote_average) ? 1 : -1)}></movie-carousel> 
+        </div>
+        <!-- card body -->
         <div class="row g-0">
           <div class="col-md-4">
-            <img src="${this._posterUrl(this.movie.poster_path,'w154')}" class="card-img-top img-fluid" alt="..."></img>
+          <img src="${this._posterUrl(this.movie.poster_path)}" class="card-img-top img-fluid" alt="..."></img>
           </div>
           <div class="col-md-8">
             <div class="card-body">
