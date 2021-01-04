@@ -1,7 +1,10 @@
 import { LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+export class MovieBase extends LitElement {  
 
+  constructor() {
+    super();   
+  }
 
-export class MovieBase extends LitElement {
   /* 
     render component in LightDOM to allow global styles defined by bootstrap
     to be accessed in the component. Removing this method means component is

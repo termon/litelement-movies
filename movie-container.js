@@ -1,17 +1,19 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { router }  from './index.js';
 import { MovieBase } from './movie-base.js';
 import './movie-list.js';
 import './movie-details.js';
 import './a-spinner.js';
 
-class MovieApp extends MovieBase {
+class MovieContainer extends MovieBase {
   
   static get properties() {
     return { 
       search: { attribute: false, type: String },
       movie: { attribute: false, type: Object },
       movies: { attribute: false, type: Array },
-      isLoading: { attribute: false, type: Boolean }
+      isLoading: { attribute: false, type: Boolean },
+      location: {type: Object} /* vaadin router location */
     };
   }
 
@@ -21,6 +23,7 @@ class MovieApp extends MovieBase {
     this.movie = undefined;
     this.movies = [];
     this.isLoading = false; 
+    this.location = router.location
   }
 
   _clear() {
@@ -87,6 +90,8 @@ class MovieApp extends MovieBase {
  
   render() {
     return html`
+      <h4 class="mb-4 mt-2">Movie Search</h4>
+      
       <movie-details .movie="${this.movie}"></movie-details>
 
       <div class="row">
@@ -109,5 +114,5 @@ class MovieApp extends MovieBase {
   }
 }
 
-window.customElements.define('movie-app', MovieApp);
+window.customElements.define('movie-container', MovieContainer);
 

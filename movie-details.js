@@ -1,4 +1,5 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { router } from './index.js';
 import { MovieBase } from './movie-base.js'
 import './movie-carousel.js';
 import './movie-video.js';
@@ -6,11 +7,18 @@ class MovieDetails extends MovieBase {
 
   static get properties() {
     return {      
-      movie: { type: Object },     
+      movie: { type: Object },   
+      location: {type: Object} /* vaadin router location */  
     };
   }
 
+  constructor() {
+    super();
+    this.location = router.location;
+  }
+
   render() { 
+    console.log('movie details location', this.location)
     if (!this.movie || !this.movie.id) return html``;
    
     return html`
