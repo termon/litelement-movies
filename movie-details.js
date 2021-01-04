@@ -1,6 +1,6 @@
 import { html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
 import './movie-carousel.js';
-
+import './movie-video.js';
 class MovieDetails extends LitElement {
 
   static get properties() {
@@ -21,24 +21,29 @@ class MovieDetails extends LitElement {
   _posterUrl(poster, size='original') {
     const imgPath = 'https://image.tmdb.org/t/p/';
     const p =  imgPath + size + poster
-    console.log('poster', p)
+    //console.log('poster', p)
     return p
   }
   
-  render() {    
+  render() { 
+    console.log('movie-details render', this.movie)   
     if (!this.movie || !this.movie.id) return html``;
    
     return html`
       <div class="card shadow-lg p-3 mb-5">
         <!-- carousel -->
-        <div class="row g-0">
-           <movie-carousel .posters=${this.movie.images.backdrops.sort((a, b) => (a.vote_average > b.vote_average) ? 1 : -1)}></movie-carousel> 
+        <div class="row g-0 mb-4">
+           <movie-carousel count="5" .posters=${this.movie.images.backdrops}></movie-carousel> 
         </div>
         <!-- card body -->
         <div class="row g-0">
           <div class="col-md-4">
-          <img src="${this._posterUrl(this.movie.poster_path)}" class="card-img-top img-fluid" alt="..."></img>
-          </div>
+           ${this.movie.videos.results.length>0 ? 
+              html`<movie-video .key="${this.movie.videos.results[0].key}"></movie-video>` 
+            :
+              html`<img src="${this._posterUrl(this.movie.poster_path)}" class="card-img-top img-fluid" alt="..."></img>`
+            } 
+          </div> 
           <div class="col-md-8">
             <div class="card-body">
               <h4 class="card-title">${ this.movie.title} <span class="badge bg-info fs-6">${this.movie.vote_average}</span></h4>
