@@ -1,9 +1,10 @@
-import { html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { MovieBase } from './movie-base.js';
 import './movie-list.js';
 import './movie-details.js';
 import './a-spinner.js';
 
-class MovieApp extends LitElement {
+class MovieApp extends MovieBase {
   
   static get properties() {
     return { 
@@ -20,16 +21,6 @@ class MovieApp extends LitElement {
     this.movie = undefined;
     this.movies = [];
     this.isLoading = false; 
-    this.imgPath = 'https://image.tmdb.org/t/p/';
-  }
-
-  /* 
-    render component in LightDOM to allow global styles defined by bootstrap
-    to be accessed in the component. Removing this method means component is
-    rendered in shadow dom and global styles defined outside component don't apply
-  */
-  createRenderRoot() {
-    return this;
   }
 
   _clear() {
@@ -38,12 +29,6 @@ class MovieApp extends LitElement {
     this.movies = [];
     this.search = '';
   } 
-
-  posterUrl(poster, size='w92') {
-    const p =  this.imgPath + size + poster
-    console.log('poster', p)
-    return p
-  }
 
   _query() {
     if (this.search === ':popular') {
@@ -54,9 +39,9 @@ class MovieApp extends LitElement {
       return `https://api.themoviedb.org/3/search/movie?query="${this.search}"`
     }
   }
+
   _getMovies() {
     this.isLoading = true 
-    //this.movie = undefined;
     fetch(this._query(), this._getTokenObj())
       .then(response => response.json())
       .then(json => {
@@ -78,7 +63,6 @@ class MovieApp extends LitElement {
           if (json.title) {
             this.movie = json
           }
-          console.log('getMovie', json) 
         }
       )
   }
@@ -94,20 +78,14 @@ class MovieApp extends LitElement {
     } 
   }
 
-_search(e) {
-  if (e.key === 'Enter') {
-    this.search = e.target.value;
-    this._getMovies();
+  _search(e) {
+    if (e.key === 'Enter') {
+      this.search = e.target.value;
+      this._getMovies();
+    }
   }
-}
-_category(c) {
-  if (c === 'Popular') {
-    this._getMovies();
-  }
-}
  
   render() {
-    console.log('movie-app render', this.movies)
     return html`
       <movie-details .movie="${this.movie}"></movie-details>
 

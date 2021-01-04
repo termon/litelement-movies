@@ -1,11 +1,11 @@
-import { html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
-
-class MovieList extends LitElement {
+import { html } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import { MovieBase } from './movie-base.js';
+class MovieList extends MovieBase {
 
   static get properties() {
     return { 
       movies: { type: Array },
-      viewFn: { type: Object }
+      viewFn: { type: Object } /* optional callback function - use event instead */
     };
   }
 
@@ -14,22 +14,11 @@ class MovieList extends LitElement {
     this.movies = [];
   }
 
-  /* 
-    render component in LightDOM to allow global styles defined by bootstrap
-    to be accessed in the component. Removing this method means component is
-    rendered in shadow dom and global styles defined outside component don't apply
-  */
-  createRenderRoot() {
-    return this;
-  }
-
-  viewEvent(id) {
+  _generateViewEvent(id) {
     this.dispatchEvent(new CustomEvent('view', {
       bubbles: true,
       composed: true,
-      detail: {
-        id
-      }
+      detail: { id }
     }));
   }
 
@@ -47,7 +36,7 @@ class MovieList extends LitElement {
       <tbody>
         ${this.movies.map((m) => html`
             <tr>
-              <td><a href="#" @click="${(e) => this.viewEvent(m.id)}">${ m.id }</a></td>
+              <td><a href="#" @click="${(e) => this._generateViewEvent(m.id)}">${ m.id }</a></td>
               <td>${ m.title }</td>
               <td>${ m.release_date }</td>    
             </tr>

@@ -1,6 +1,6 @@
-import {LitElement, html} from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
-
-class MovieVideo extends LitElement {
+import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { MovieBase } from './movie-base.js'
+class MovieVideo extends MovieBase {
     static get properties() {
         return {
             key: { type: String }
@@ -12,15 +12,10 @@ class MovieVideo extends LitElement {
         this.url = `https://www.youtube.com/embed/`
     }
 
-    createRenderRoot() {
-        return this;
-    }
-
-    render() {
-        console.log('movie-video', this.url, this.key)
+    render() {        
         return html`<iframe src="${this.url+this.key}"></iframe>`
     }
 
 }
 
-customElements.define('movie-video', MovieVideo);
+window.customElements.define('movie-video', MovieVideo);

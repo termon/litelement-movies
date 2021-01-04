@@ -1,6 +1,7 @@
-import {LitElement, html} from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import {html} from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { MovieBase } from './movie-base.js';
 
-class MovieCarousel extends LitElement {
+class MovieCarousel extends MovieBase {
     static get properties() {
         return {
             posters: { type: String },  
@@ -8,38 +9,12 @@ class MovieCarousel extends LitElement {
         }
     }
 
-    /**
-     * Instance of the element is created/upgraded. Use: initializing state,
-     * set up event listeners, create shadow dom.
-     * @constructor
-     */
     constructor() {
         super();
         this.posters = [];
         this.count = 3;
-        this.imgPath = 'https://image.tmdb.org/t/p/';
     }
 
-    /* 
-        render component in LightDOM to allow global styles defined by bootstrap
-        to be accessed in the component. Removing this method means component is
-        rendered in shadow dom and global styles defined outside component don't apply
-    */
-    createRenderRoot() {
-        return this;
-    }
-
-    posterUrl(poster, size='original') {
-        const p =  this.imgPath + size + poster
-        console.log('poster', p)
-        return p
-      }
-
-    /**
-     * Implement to describe the element's DOM using lit-html.
-     * Use the element current props to return a lit-html template result
-     * to render into the element.
-     */
     render() {
         return this._carousel();
     }
@@ -67,7 +42,7 @@ class MovieCarousel extends LitElement {
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </a>
-                </div>
+            </div>
         `;
     }
 

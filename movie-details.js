@@ -1,7 +1,8 @@
-import { html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
+import { MovieBase } from './movie-base.js'
 import './movie-carousel.js';
 import './movie-video.js';
-class MovieDetails extends LitElement {
+class MovieDetails extends MovieBase {
 
   static get properties() {
     return {      
@@ -9,24 +10,7 @@ class MovieDetails extends LitElement {
     };
   }
 
-  /* 
-    render component in LightDOM to allow global styles defined by bootstrap
-    to be accessed in the component. Removing this method means component is
-    rendered in shadow dom and global styles defined outside component don't apply
-  */
-  createRenderRoot() {
-    return this;
-  }
-
-  _posterUrl(poster, size='original') {
-    const imgPath = 'https://image.tmdb.org/t/p/';
-    const p =  imgPath + size + poster
-    //console.log('poster', p)
-    return p
-  }
-  
   render() { 
-    console.log('movie-details render', this.movie)   
     if (!this.movie || !this.movie.id) return html``;
    
     return html`
