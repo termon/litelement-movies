@@ -1,13 +1,7 @@
-import { html } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
 import { MovieBase } from './movie-base.js';
 
 class NotFound extends MovieBase {
-
-  static get properties() {
-    return { 
-      
-    };
-  }
 
   render() {
       return html`

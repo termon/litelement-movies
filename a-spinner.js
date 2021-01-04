@@ -94,11 +94,7 @@ class ASpinner extends LitElement {
   }
 
   render() {
-    return this.loading ? html`   
-      <div class="mt-4 mb-4 w-50 mx-auto">
-        <div class="dot-pulse"></div>
-      </div>    
-    ` : '';
+    return this.loading ? html`<div class="dot-pulse"></div>` : html``;
   }
 }
 
