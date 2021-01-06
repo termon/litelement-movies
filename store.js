@@ -36,6 +36,12 @@ class Store {
         this._fetchMovie(id)
     }
 
+    // computed property - makeAutoObservable enables all getters as computed
+    // https://mobx.js.org/computeds.html
+    get clearDisabled() {
+      return this.movies.length == 0
+    }
+
     // ====================================== private methods ===================================
     // implementations that use either separate action methods or call action function in promise
     // https://mobx.js.org/actions.html#examples

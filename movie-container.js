@@ -14,7 +14,7 @@ export class MovieContainer extends MovieBase {
       <!-- search -->
       <div class="row">
         <input class="col-6 " .value="${store.search}" @keydown="${ (e) => this._search(e) }" placeholder="search....">
-        <button class="btn btn-warning btn-rounded col-1 mx-3" @click="${(e)=> store.clear()}">Clear</button>
+        <button ?disabled="${store.clearDisabled}" class="btn btn-warning btn-rounded col-1 mx-3" @click="${(e)=> store.clear()}">Clear</button>
        </div>
 
       <!-- loading spinner -->
