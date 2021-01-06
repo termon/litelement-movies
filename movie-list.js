@@ -23,7 +23,6 @@ class MovieList extends MovieBase {
   }
 
   render() {
-    console.log('movie-list render', this.movies)
     return html`
       <table class="table table-striped table-hover">
       <thead>

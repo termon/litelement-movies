@@ -30,10 +30,11 @@ class MovieDetails extends MovieBase {
         <!-- card body -->
         <div class="row g-0">
           <div class="col-md-4">
-           ${this.movie.videos.results.length>0 ? 
+           ${ this.movie.videos.results.length > 0 
+            ? 
               html`<movie-video .key="${this.movie.videos.results[0].key}"></movie-video>` 
             :
-              html`<img src="${this._posterUrl(this.movie.poster_path)}" class="card-img-top img-fluid" alt="..."></img>`
+              html`<img src="${this.posterUrl(this.movie.poster_path)}" class="card-img-top img-fluid" alt="..."></img>`
             } 
           </div> 
           <div class="col-md-8">
