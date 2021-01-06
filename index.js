@@ -1,5 +1,5 @@
 import {Router} from 'https://unpkg.com/@vaadin/router@latest?module';
-import { store } from './state/store.js'
+import { store } from './store.js'
 import './movie-home.js'
 import './movie-container.js'
 import './movie-details.js'

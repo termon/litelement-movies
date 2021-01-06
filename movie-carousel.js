@@ -16,10 +16,6 @@ class MovieCarousel extends MovieBase {
     }
 
     render() {
-        return this._carousel();
-    }
-
-    _carousel() {
         return html`
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                 <ol class="carousel-indicators">
@@ -30,7 +26,7 @@ class MovieCarousel extends MovieBase {
                 <div class="carousel-inner">
                     ${this.posters.slice(0,this.count).map((p,i) => html`
                         <div class="carousel-item ${i==0?'active':''}">
-                            <img src="${this._posterUrl(p.file_path)}" class="d-block w-100" alt="...">
+                            <img src="${this.posterUrl(p.file_path)}" class="d-block w-100" alt="...">
                         </div>`
                     )}                       
                 </div>

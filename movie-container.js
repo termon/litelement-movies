@@ -1,13 +1,13 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
-import { router, store }  from './index.js';
-import { clear, getMovies, getMovie } from './state/actions.js';
+import { autorun } from "https://unpkg.com/mobx@latest?module"
 
+import { router, store }  from './index.js';
 import { MovieBase } from './movie-base.js';
-import { store } from './store.js'
-import {  autorun } from "https://unpkg.com/mobx@latest?module"
 import './movie-list.js';
 import './movie-details.js';
 import './a-spinner.js';
+
+// Movie Parent Component
 class MovieContainer extends MovieBase {
   
   static get properties() {
@@ -22,7 +22,7 @@ class MovieContainer extends MovieBase {
 
   connectedCallback() {
     super.connectedCallback();
-    // mobx: sync local properties to store values
+    // mobx: sync local properties to store values using autorun
     this.disposer = autorun( () => {
       this.search = store.search;
       this.movie = store.movie;
@@ -32,17 +32,11 @@ class MovieContainer extends MovieBase {
     })
   }
   
+  // dispose of autorun
   disconnectedCallback() {
     this.disposer();
   }
 
-  _search(e) {
-    if (e.key === 'Enter') {
-      store.search = e.target.value;
-      store.getMovies();
-    }
-  }
- 
   render() {
     return html`
       <h4 class="mb-4 mt-2">Movie Search</h4>
@@ -64,6 +58,15 @@ class MovieContainer extends MovieBase {
       
     `;
   }
+
+  // ---------------- local method to react to search input ----------
+  _search(e) {
+    if (e.key === 'Enter') {
+      store.search = e.target.value;
+      store.getMovies();
+    }
+  }
+ 
 }
 
 window.customElements.define('movie-container', MovieContainer);

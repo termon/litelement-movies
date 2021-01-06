@@ -1,8 +1,6 @@
 import { LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
-import { connect } from 'https://unpkg.com/pwa-helpers@latest?module'
-import { store } from './state/store.js';
 
-export class MovieBase extends connect(store)(LitElement) {  
+export class MovieBase extends LitElement {  
 
   constructor() {
     super();   
