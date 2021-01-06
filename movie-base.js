@@ -18,7 +18,7 @@ export class MovieBase extends connect(store)(LitElement) {
   }
 
   // size='w92'
-  _posterUrl(poster, size='original', path = 'https://image.tmdb.org/t/p/') {
+  posterUrl(poster, size='original', path = 'https://image.tmdb.org/t/p/') {
     return path + size + poster  
   }
 }
