@@ -1,9 +1,7 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
-import { router } from './index.js';
-import { MovieBase } from './movie-base.js'
-import './movie-carousel.js';
-import './movie-video.js';
-class MovieDetails extends MovieBase {
+import { router, MovieBase, MovieCarousel, MovieVideo } from './index.js';
+
+export class MovieDetails extends MovieBase {
 
   static get properties() {
     return {      

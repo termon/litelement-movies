@@ -1,6 +1,7 @@
 import { html } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
 import { MovieBase } from './movie-base.js';
-class MovieList extends MovieBase {
+
+export class MovieList extends MovieBase {
 
   static get properties() {
     return { 

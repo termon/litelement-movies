@@ -1,7 +1,7 @@
 import {html} from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
 import { MovieBase } from './movie-base.js';
 
-class MovieCarousel extends MovieBase {
+export class MovieCarousel extends MovieBase {
     static get properties() {
         return {
             posters: { type: String },  

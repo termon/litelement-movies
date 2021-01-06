@@ -1,4 +1,6 @@
-import { observable, action, computed, makeObservable, makeAutoObservable } from "https://unpkg.com/mobx@latest?module"
+import { observable, action, computed, makeObservable, makeAutoObservable, Reaction } from "https://unpkg.com/mobx@latest?module"
+
+// =============== MobX Store =====================
 class Store {
     constructor() {
         this.isLoading = false;
@@ -114,3 +116,55 @@ class Store {
 }
 
 export const store = new Store();
+
+
+/**
+ * lit-mobx@1.0.0 mixin
+ * 
+ * A class mixin which can be applied to lit-element's
+ * [UpdatingElement](https://lit-element.polymer-project.org/api/classes/_lib_updating_element_.updatingelement.html)
+ * derived classes. This mixin adds a mobx reaction which tracks the update method of UpdatingElement.
+ *
+ * Any observables used in the render template of the element will be tracked by a reaction
+ * and cause an update of the element upon change.
+ *
+ * @param constructor the constructor to extend from to add the mobx reaction, must be derived from UpdatingElement.
+ */
+const reaction = Symbol('LitMobxRenderReaction');
+const cachedRequestUpdate = Symbol('LitMobxRequestUpdate');
+
+export function MobxReactionUpdate(constructor) {
+  var _a, _b;
+  return _b = class MobxReactingElement extends constructor {
+    constructor() {
+      super(...arguments);
+      this[_a] = () => {
+        this.requestUpdate();
+      };
+    }
+    connectedCallback() {
+      super.connectedCallback();
+      const name = this.constructor.name /* c8 ignore next */ || this.nodeName;
+      this[reaction] = new Reaction(`${name}.update()`, this[cachedRequestUpdate]);
+      if (this.hasUpdated)
+      this.requestUpdate();
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      if (this[reaction]) {
+        this[reaction].dispose();
+        this[reaction] = undefined;
+      }
+    }
+    update(changedProperties) {
+      if (this[reaction]) {
+        this[reaction].track(super.update.bind(this, changedProperties));
+      } else
+      {
+        super.update(changedProperties);
+      }
+    }},
+
+  _a = cachedRequestUpdate,
+  _b;
+}

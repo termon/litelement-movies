@@ -1,6 +1,6 @@
 import { css, html, LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
 
-class ASpinner extends LitElement {
+export class ASpinner extends LitElement {
   
   static get properties() {
     return { 

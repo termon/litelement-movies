@@ -1,6 +1,8 @@
 import { LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
+import { MobxReactionUpdate } from  './store.js'
 
-export class MovieBase extends LitElement {  
+// apply MobxReactionUpdate mixin to LitElement
+export class MovieBase extends MobxReactionUpdate(LitElement) {  
 
   constructor() {
     super();   
