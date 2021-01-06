@@ -9,7 +9,14 @@
 	 crossorigin="anonymous">
 
   <script type="module" src="index.js"></script>
-
+  <script>
+    // HACK: The Redux package assumes `process` exists - mock it here before the module is loaded.
+    window.process = {
+    env: {
+      NODE_ENV: 'production'
+    }
+  };
+  </script>
 </head>
 <body class="container my-4 mx-auto bg-light">
 

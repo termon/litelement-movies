@@ -1,5 +1,8 @@
 import { LitElement } from 'https://unpkg.com/lit-element@latest/lit-element.js?module';
-export class MovieBase extends LitElement {  
+import { connect } from 'https://unpkg.com/pwa-helpers@latest?module'
+import { store } from './state/store.js';
+
+export class MovieBase extends connect(store)(LitElement) {  
 
   constructor() {
     super();   
@@ -15,7 +18,7 @@ export class MovieBase extends LitElement {
   }
 
   // size='w92'
-  posterUrl(poster, size='original', path = 'https://image.tmdb.org/t/p/') {
+  _posterUrl(poster, size='original', path = 'https://image.tmdb.org/t/p/') {
     return path + size + poster  
   }
 }

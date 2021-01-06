@@ -1,10 +1,11 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
-import { router }  from './index.js';
+import { router, store }  from './index.js';
+import { clear, getMovies, getMovie } from './state/actions.js';
+
 import { MovieBase } from './movie-base.js';
 import './movie-list.js';
 import './movie-details.js';
 import './a-spinner.js';
-
 class MovieContainer extends MovieBase {
   
   static get properties() {
@@ -13,78 +14,42 @@ class MovieContainer extends MovieBase {
       movie: { attribute: false, type: Object },
       movies: { attribute: false, type: Array },
       isLoading: { attribute: false, type: Boolean },
-      location: {type: Object} /* vaadin router location */
+      location: { type: Object } /* vaadin router location */
     };
   }
 
   constructor() {
     super();
-    this.search = '';
-    this.movie = undefined;
-    this.movies = [];
-    this.isLoading = false; 
+    // don't need to initialise properties synced with store as this is done by stateChanged
     this.location = router.location
+    this.search = ''
+  }
+
+  // Redux callback method to synchronise state changes with class properties
+  stateChanged(state) {
+    console.log('stateChanged', state)
+    this.movie = state.movie 
+    this.movies = state.movies
+    this.isLoading = state.isLoading
   }
 
   _clear() {
-    console.log('clearing', this.movie, this.movies, this.search)
-    this.movie = undefined;
-    this.movies = [];
-    this.search = '';
+    store.dispatch(clear())
+    this.search = ''
   } 
 
-  _query() {
-    if (this.search === ':popular') {
-      return 'https://api.themoviedb.org/3/movie/top_rated'
-    } else if (this.search === ':trending') {
-      return 'https://api.themoviedb.org/3/trending/movie/week'
-    } else {
-      return `https://api.themoviedb.org/3/search/movie?query="${this.search}"`
-    }
-  }
-
-  _getMovies() {
-    this.isLoading = true 
-    fetch(this._query(), this._getTokenObj())
-      .then(response => response.json())
-      .then(json => {
-        this.isLoading = false
-        if (json.results) {
-          this.movies = json.results   
-          this.search = '' 
-          console.log(json.results) 
-        }  
-      })
+  _getMovies(search) {
+    store.dispatch(getMovies(search))
   }
 
   _getMovie(id) {
-      this.isLoading = true
-      fetch('https://api.themoviedb.org/3/movie/'+id+'?append_to_response=credits,images,videos', this._getTokenObj())
-        .then(response => response.json())
-        .then(json => { 
-          this.isLoading = false
-          if (json.title) {
-            this.movie = json
-          }
-        }
-      )
-  }
-
-  _getTokenObj() { 
-    return {
-      method: 'GET',
-      headers: new Headers(
-        {
-          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0NDZlNGVlOTVkMTM0ZGE4ZDllOTUyZDg3ZWQ5OGViNyIsInN1YiI6IjVhYTNmYmY2OTI1MTQxMjc4ZDAwZDU0NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.lx2bw91VSdbeU-NVOeg2lfOBCUKoRU7mlZGktWK-iZc', 
-          'Content-Type': 'application/json'
-        })
-    } 
+    store.dispatch(getMovie(id))
   }
 
   _search(e) {
     if (e.key === 'Enter') {
       this.search = e.target.value;
-      this._getMovies();
+      this._getMovies(e.target.value);
     }
   }
  
@@ -95,7 +60,7 @@ class MovieContainer extends MovieBase {
       <movie-details .movie="${this.movie}"></movie-details>
 
       <div class="row">
-        <input class="col-6 " .value="${this.search}" @keydown="${ (e) => this._search(e) }" placeholder="search....">
+        <input class="col-6 " .value="${this.search}" @keydown="${(e) => this._search(e)}" placeholder="search....">
         <button class="btn btn-warning btn-rounded col-1 mx-3" @click="${(e)=> this._clear()}">Clear</button>
        </div>
 

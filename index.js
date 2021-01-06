@@ -1,4 +1,5 @@
 import {Router} from 'https://unpkg.com/@vaadin/router@latest?module';
+import { store } from './state/store.js'
 import './movie-home.js'
 import './movie-container.js'
 import './movie-details.js'
@@ -12,4 +13,4 @@ router.setRoutes([
   {path: '(.*)', component: 'not-found'},
 ]);
 
-export  { router };
+export  { router, store };
