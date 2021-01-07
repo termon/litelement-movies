@@ -16,7 +16,6 @@ export class MovieDetails extends MovieBase {
   }
 
   render() { 
-    console.log('movie details location', this.location)
     if (!this.movie || !this.movie.id) return html``;
    
     return html`

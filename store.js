@@ -48,6 +48,7 @@ class Store {
    
     _fetchMovies() {
         this.isLoading = true 
+        console.log(this._query())
         fetch(this._query(), this._getTokenObj())
             .then(response => response.json())
             .then(this._fetchMoviesSuccessAction)
@@ -99,10 +100,16 @@ class Store {
   
     // configure query based on search value
     _query() {
-        if (this.search === ':popular') {
-          return 'https://api.themoviedb.org/3/movie/top_rated'
-        } else if (this.search === ':trending') {
+        if (this.search === ':trending') {
           return 'https://api.themoviedb.org/3/trending/movie/week'
+        } else if (this.search === ':popular') {
+          return 'https://api.themoviedb.org/3/movie/popular'
+        } else if (this.search === ':playing') {
+          return 'https://api.themoviedb.org/3/movie/now_playing'
+        } else if (this.search === ':upcoming') {
+          return 'https://api.themoviedb.org/3/movie/upcoming'
+        } else if (this.search === ':top') {
+          return 'https://api.themoviedb.org/3/movie/top_rated'
         } else {
           return `https://api.themoviedb.org/3/search/movie?query="${this.search}"`
         }

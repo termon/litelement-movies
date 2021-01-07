@@ -9,6 +9,7 @@ import { MovieList } from './movie-list.js'
 import { MovieCarousel } from './movie-carousel.js'
 import { MovieVideo } from './movie-video.js'
 import { ASpinner } from './a-spinner.js'
+import { MovieSearch } from './movie-search.js'
 
 const outlet = document.getElementById('app');
 const router = new Router(outlet);
@@ -27,5 +28,6 @@ export  {
   MovieDetails,
   MovieCarousel,
   MovieVideo,
-  ASpinner
+  ASpinner,
+  MovieSearch
  };
