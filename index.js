@@ -1,6 +1,6 @@
 import { Router } from 'https://unpkg.com/@vaadin/router@latest?module';
 import { store } from './store.js'
-import { LitLoader } from './lit-loader.js'
+import { LitSpinner } from './lit-spinner.js'
 import { MovieBase } from './movie-base.js'
 import { MovieHome} from './movie-home.js'
 import { MovieContainer } from './movie-container.js'
@@ -28,6 +28,6 @@ export  {
   MovieDetails,
   MovieCarousel,
   MovieVideo,
-  LitLoader,
+  LitSpinner,
   MovieSearch
  };
