@@ -4,7 +4,7 @@ import { observable, action, computed, makeObservable, makeAutoObservable, React
 class Store {
     constructor() {
         this.isLoading = false;
-        this.movie = []
+        this.movie = {}
         this.movies = []
         this.search = ''
         this.error = ''
