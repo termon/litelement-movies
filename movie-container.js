@@ -1,6 +1,6 @@
 import { html } from 'https://unpkg.com/lit-html@latest/lit-html.js?module';
 
-import { router, store, MovieBase, MovieList, MovieDetails, MovieSearch, ASpinner }  from './index.js';
+import { router, store, MovieBase, MovieList, MovieDetails, MovieSearch, LitSpinner }  from './index.js';
 
 // Movie Parent Component
 export class MovieContainer extends MovieBase {
@@ -16,9 +16,7 @@ export class MovieContainer extends MovieBase {
       <movie-search .disabled="${store.clearDisabled}" .search="${store.search}" @clear="${() => store.clear()}" @search="${(e) => this._search(e) }"></movie-search>
 
       <!-- loading spinner -->
-      <div class="mt-4 mb-4 w-50 mx-auto">
-        <a-spinner class="mt-4 mb-4" .loading="${store.isLoading}"></a-spinner>
-      </div>
+      <lit-spinner class="mt-4 mb-4" .loading="${store.isLoading}"></lit-spinner>
 
       <!-- display list of movies -->
       <!-- attribute @view is an event handler for custom event 'view' emitted by movie-list -->
