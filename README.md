@@ -1,4 +1,4 @@
-# Lit Movies
+# LitElement Movies
 
 This application aims to demonstrate
 
