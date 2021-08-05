@@ -18,11 +18,6 @@ export class MovieCarousel extends MovieBase {
     render() {
         return html`
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-                <ol class="carousel-indicators">
-                    ${this.posters.slice(0,this.count).map((p,i) => html`
-                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${i}" ></li>                
-                    `)}          
-                </ol>
                 <div class="carousel-inner">
                     ${this.posters.slice(0,this.count).map((p,i) => html`
                         <div class="carousel-item ${i==0?'active':''}">

@@ -67,7 +67,8 @@ class Store {
     _fetchMoviesSuccessAction = json => {
         this.isLoading = false
         if (json.results) {                 
-            this.movies = json.results   
+            this.movies = json.results
+            this.movie = undefined   
             this.search = ''
         } 
     }
